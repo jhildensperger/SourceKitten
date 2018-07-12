@@ -477,6 +477,7 @@ public func parseFullXMLDocs(_ xmlDocs: String) -> [String: SourceKitRepresentab
         docs[SwiftDocKey.docDeclaration.rawValue] = rootXML["Declaration"].element?.text
         // XML before swift 3.2 does not have CommentParts container
         let commentPartsXML = (try? rootXML.byKey("CommentParts")) ?? rootXML
+        docs[SwiftDocKey.docAbstract.rawValue] = commentPartsXML["Abstract"].element?.recursiveText
         let parameters = commentPartsXML["Parameters"].children
         if !parameters.isEmpty {
             func docParameters(from indexer: XMLIndexer) -> [String: SourceKitRepresentable] {
