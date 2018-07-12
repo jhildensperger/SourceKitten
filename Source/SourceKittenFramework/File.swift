@@ -503,7 +503,7 @@ private extension XMLIndexer {
         }
         let elements = children.compactMap { $0.element }
         func dictionary(from element: SWXMLHash.XMLElement) -> [String: SourceKitRepresentable] {
-            return [element.name: element.text]
+            return [element.name: element.recursiveText]
         }
         return elements.map(dictionary(from:)) as [SourceKitRepresentable]
     }
