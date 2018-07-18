@@ -61,6 +61,8 @@ public enum SwiftDocKey: String {
     case docDeclaration       = "key.doc.declaration"
     /// Discussion documentation of documented token ([SourceKitRepresentable]).
     case docDiscussion        = "key.doc.discussion"
+    /// Full discussion as XML (String).
+    case docDiscussionXML     = "key.doc.discussion_as_xml"
     /// File where the documented token is located (String).
     case docFile              = "key.doc.file"
     /// Line where the token's declaration begins (Int64).
