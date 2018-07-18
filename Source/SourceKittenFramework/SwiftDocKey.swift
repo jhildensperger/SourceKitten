@@ -12,6 +12,8 @@ import Foundation
 public enum SwiftDocKey: String {
     // MARK: SourceKit Keys
 
+    /// The access level of the code (String).
+    case accessibility        = "key.accessibility"
     /// Annotated declaration (String).
     case annotatedDeclaration = "key.annotated_decl"
     /// Body length (Int64).
