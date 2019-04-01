@@ -24,15 +24,10 @@ class StructureTests: XCTestCase {
     }
 
     func testGenerateSameStructureFileAndContents() throws {
-    #if swift(>=4.1.50)
-        // FIXME
-        print("\(#function) is failing with Swift(>=4.1.50)")
-    #else
         let fileContents = try String(contentsOfFile: #file, encoding: .utf8)
         try XCTAssertEqual(Structure(file: File(path: #file)!),
             Structure(file: File(contents: fileContents)),
             "should generate the same structure for a file as raw text")
-    #endif
     }
 
     func testEnum() throws {
@@ -99,13 +94,7 @@ class StructureTests: XCTestCase {
                             "key.length": 3
                         ]
                     ],
-                    "key.runtime_name": {
-    #if swift(>=4.1.50)
-                        return "_TtC4main3Foo"
-    #else
-                        return "_TtC8__main__3Foo"
-    #endif
-                    }(),
+                    "key.runtime_name": "_TtC4main3Foo",
                     "key.inheritedtypes": [
                         ["key.name": "Bar"]
                     ]

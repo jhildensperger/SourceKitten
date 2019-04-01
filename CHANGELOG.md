@@ -10,6 +10,73 @@
 
 ##### Bug Fixes
 
+* “.swift”-suffixed directory in xcodebuild arguments no longer detected as
+  Swift file.  
+  [Minh Nguyễn](https://github.com/1ec5)
+  [#574](https://github.com/jpsim/SourceKitten/issues/574)
+
+## 0.22.0
+
+##### Breaking
+
+* SourceKitten now requires Swift 4.2 or higher to build.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Enhancements
+
+* Add `Request.syntaxTree` to get a serialized representation of the file's
+  SwiftSyntax tree.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Bug Fixes
+
+* Fix crash in `NSString.location(fromByteOffset:)` when using unicode
+  characters.  
+  [JP Simard](https://github.com/jpsim)
+  [realm/SwiftLint#2276](https://github.com/realm/SwiftLint/issues/2276)
+
+## 0.21.3
+
+This is the last release to support building with Swift 4.0 and Swift 4.1.
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* If New Build System is enabled on Xcode, the `doc` command does not need to
+  use the `clean` action on `xcodebuild`.  
+  [Norio Nomura](https://github.com/norio-nomura)
+
+* Use 'as' bridging on Linux when using Swift 4.2.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Bug Fixes
+
+* None.
+
+## 0.21.2
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* Add support for C-language annotations
+  (e.g. `__attribute__((annotate("This is an annotation")))`).  
+  [Jeff Verkoeyen](https://github.com/jverkoey)
+
+* Improve support for building & running with Swift 4.2.  
+  [Norio Nomura](https://github.com/norio-nomura)
+
+* Add new values for `SwiftDeclarationAttributeKind` and `SyntaxKind` with
+  Swift 4.2.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Bug Fixes
+
 * None.
 
 ## 0.21.1

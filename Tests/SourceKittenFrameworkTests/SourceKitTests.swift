@@ -61,11 +61,13 @@ private func sourcekitStrings(startingWith pattern: String) -> Set<String> {
 
 let sourcekittenXcodebuildArguments = [
     "-workspace", "SourceKitten.xcworkspace",
-    "-scheme", "SourceKittenFramework",
-    "-derivedDataPath",
-    URL(fileURLWithPath: NSTemporaryDirectory())
-        .appendingPathComponent("testLibraryWrappersAreUpToDate").path
-]
+    "-scheme", "sourcekitten"
+] + { () -> [String] in
+    return ProcessInfo.processInfo.environment["XCODE_VERSION_MINOR"].map { $0 >= "1000" } ?? false ? [] : [
+        "-derivedDataPath",
+        URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("testLibraryWrappersAreUpToDate").path
+    ]
+}()
 
 // swiftlint:disable:next type_body_length
 class SourceKitTests: XCTestCase {
@@ -96,10 +98,6 @@ class SourceKitTests: XCTestCase {
     }
 
     func testSyntaxKinds() {
-    #if swift(>=4.1.50)
-        // FIXME
-        print("\(#function) is failing with Swift(>=4.1.50)")
-    #elseif swift(>=4.1)
         let expected: [SyntaxKind] = [
             .argument,
             .attributeBuiltin,
@@ -119,8 +117,10 @@ class SourceKitTests: XCTestCase {
             .placeholder,
             .string,
             .stringInterpolationAnchor,
-            .typeidentifier
+            .typeidentifier,
+            .poundDirectiveKeyword
         ]
+
         let actual = sourcekitStrings(startingWith: "source.lang.swift.syntaxtype.")
         let expectedStrings = Set(expected.map { $0.rawValue })
         XCTAssertEqual(
@@ -131,7 +131,6 @@ class SourceKitTests: XCTestCase {
             print("the following strings were added: \(actual.subtracting(expectedStrings))")
             print("the following strings were removed: \(expectedStrings.subtracting(actual))")
         }
-    #endif
     }
 
     // swiftlint:disable:next function_body_length
@@ -190,10 +189,6 @@ class SourceKitTests: XCTestCase {
 
     // swiftlint:disable:next function_body_length
     func testSwiftDeclarationAttributeKind() {
-    #if swift(>=4.1.50)
-        // FIXME
-        print("\(#function) is failing with Swift(>=4.1.50)")
-    #elseif swift(>=4.1)
         let expected: [SwiftDeclarationAttributeKind] = [
             .ibaction,
             .iboutlet,
@@ -225,7 +220,6 @@ class SourceKitTests: XCTestCase {
             .requiresStoredProperyInits,
             .nonobjc,
             .fixedLayout,
-            .inlineable,
             .specialize,
             .objcMembers,
             .mutating,
@@ -237,7 +231,6 @@ class SourceKitTests: XCTestCase {
             .effects,
             .objcBriged,
             .nsApplicationMain,
-            .objcNonLazyRealization,
             .synthesizedProtocol,
             .testable,
             .alignment,
@@ -246,7 +239,6 @@ class SourceKitTests: XCTestCase {
             .indirect,
             .warnUnqualifiedAccess,
             .cdecl,
-            .versioned,
             .discardableResult,
             .implements,
             .objcRuntimeName,
@@ -262,9 +254,17 @@ class SourceKitTests: XCTestCase {
             .setterInternal,
             .setterPublic,
             .setterOpen,
-            .implicitlyUnwrappedOptional,
             .optimize,
-            .consuming
+            .consuming,
+            .implicitlyUnwrappedOptional,
+            .underscoredObjcNonLazyRealization,
+            .clangImporterSynthesizedType,
+            .forbidSerializingReference,
+            .usableFromInline,
+            .weakLinked,
+            .inlinable,
+            .dynamicMemberLookup,
+            .frozen
         ]
 
         let actual = sourcekitStrings(startingWith: "source.decl.attribute.")
@@ -277,11 +277,10 @@ class SourceKitTests: XCTestCase {
             print("the following strings were added: \(actual.subtracting(expectedStrings))")
             print("the following strings were removed: \(expectedStrings.subtracting(actual))")
         }
-    #endif
     }
 
     func testLibraryWrappersAreUpToDate() throws {
-        let sourceKittenFrameworkModule = Module(xcodeBuildArguments: sourcekittenXcodebuildArguments, name: nil, inPath: projectRoot)!
+        let sourceKittenFrameworkModule = Module(xcodeBuildArguments: sourcekittenXcodebuildArguments, name: "SourceKittenFramework", inPath: projectRoot)!
         let docsJSON = sourceKittenFrameworkModule.docs.description
         XCTAssert(docsJSON.range(of: "error type") == nil)
         do {
@@ -336,6 +335,18 @@ class SourceKitTests: XCTestCase {
         let actualStructure = Structure(sourceKitResponse: output)
         XCTAssertEqual(expectedStructure, actualStructure)
     }
+
+    func testSyntaxTree() throws {
+        let file = File(path: "\(fixturesDirectory)Bicycle.swift")!
+        let request = Request.syntaxTree(file: file, byteTree: false)
+        let response = try request.send()
+        guard let syntaxJSON = response["key.serialized_syntax_tree"] as? String else {
+            XCTFail("Could not get serialized syntax tree")
+            return
+        }
+
+        compareJSONString(withFixtureNamed: "BicycleSyntax", jsonString: syntaxJSON)
+    }
 }
 
 extension SourceKitTests {
@@ -346,7 +357,8 @@ extension SourceKitTests {
             ("testSwiftDeclarationKind", testSwiftDeclarationKind),
             ("testSwiftDeclarationAttributeKind", testSwiftDeclarationAttributeKind),
             ("testIndex", testIndex),
-            ("testYamlRequest", testYamlRequest)
+            ("testYamlRequest", testYamlRequest),
+            ("testSyntaxTree", testSyntaxTree)
         ]
     }
 }

@@ -10,7 +10,10 @@ XCODEFLAGS=-workspace 'SourceKitten.xcworkspace' \
 SWIFT_BUILD_FLAGS=--configuration release
 UNAME=$(shell uname)
 ifeq ($(UNAME), Darwin)
+USE_SWIFT_STATIC_STDLIB:=$(shell test -d $$(dirname $$(xcrun --find swift))/../lib/swift_static/macosx && echo yes)
+ifeq ($(USE_SWIFT_STATIC_STDLIB), yes)
 SWIFT_BUILD_FLAGS+= -Xswiftc -static-stdlib
+endif
 endif
 
 SOURCEKITTEN_EXECUTABLE=$(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path)/sourcekitten
@@ -80,7 +83,10 @@ archive:
 release: package archive
 
 docker_test:
-	docker run -v `pwd`:`pwd` -w `pwd` --rm norionomura/swift:40 swift test
+	docker run -v `pwd`:`pwd` -w `pwd` --name sourcekitten --rm norionomura/swift:42 swift test --parallel
+
+docker_htop:
+	docker run -it --rm --pid=container:sourcekitten terencewestphal/htop || reset
 
 # http://irace.me/swift-profiling/
 display_compilation_time:
@@ -97,6 +103,20 @@ update_clang_headers:
 	rm Source/Clang_C/include/module.modulemap
 	echo '#include "BuildSystem.h"\n#include "CXCompilationDatabase.h"\n#include "CXErrorCode.h"\n#include "CXString.h"\n#include "Documentation.h"\n#include "Index.h"\n#include "Platform.h"' > Source/Clang_C/include/Clang_C.h
 	sed -i '' "s/^#include \"clang-c\/\(.*\)\"/#include \"\1\"/g" Source/Clang_C/include/*
+
+update_commandant_fixtures: update_commandant_fixtures_macos update_commandant_fixtures_docker
+
+update_commandant_fixtures_macos:
+	for identifier in org.swift.40320171205a org.swift.41220180531a ; do \
+		swift package reset ; \
+		OVERWRITE_FIXTURES=1 xcrun --toolchain $$identifier swift test --filter Commandant ; \
+	done
+
+update_commandant_fixtures_docker:
+	for image in norionomura/swift:403 norionomura/swift:412 norionomura/swift:4220180706a ; do \
+		swift package reset ; \
+		docker run -t -v `pwd`:`pwd` -w `pwd` --rm $$image env OVERWRITE_FIXTURES=1 swift test --filter Commandant ; \
+	done
 
 get_version:
 	@echo $(VERSION_STRING)
