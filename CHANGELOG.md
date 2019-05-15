@@ -12,6 +12,43 @@
 
 * None.
 
+## 0.23.2
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* Add parsed extension declarations to Swift docs.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+* Make `File` conform to `Equatable` and `Hashable`.  
+  [Elliott Williams](https://github.com/elliottwilliams)
+
+* Add `cursorInfoUSR` case to the `Request`.  
+  [Timofey Solonin](https://github.com/biboran)
+
+##### Bug Fixes
+
+* None.
+
+## 0.23.1
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
+* Fix warnings or errors when compiling in Swift 5 language mode.  
+  [Yi Wang](https://github.com/neakor)
+  [JP Simard](https://github.com/jpsim)
+
 ## 0.23.0
 
 ##### Breaking
