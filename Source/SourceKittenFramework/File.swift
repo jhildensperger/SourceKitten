@@ -465,6 +465,7 @@ public func parseFullXMLDocs(_ xmlDocs: String) -> [String: SourceKitRepresentab
         docs[SwiftDocKey.docDeclaration.rawValue] = rootXML["Declaration"].element?.text
         // XML before swift 3.2 does not have CommentParts container
         let commentPartsXML = (try? rootXML.byKey("CommentParts")) ?? rootXML
+        docs[SwiftDocKey.docAbstract.rawValue] = commentPartsXML["Abstract"].element?.recursiveText
         let parameters = commentPartsXML["Parameters"].children
         if !parameters.isEmpty {
             func docParameters(from indexer: XMLIndexer) -> [String: SourceKitRepresentable] {
@@ -476,6 +477,7 @@ public func parseFullXMLDocs(_ xmlDocs: String) -> [String: SourceKitRepresentab
             docs[SwiftDocKey.docParameters.rawValue] = parameters.map(docParameters(from:)) as [SourceKitRepresentable]
         }
         docs[SwiftDocKey.docDiscussion.rawValue] = commentPartsXML["Discussion"].childrenAsArray()
+        docs[SwiftDocKey.docDiscussionXML.rawValue] = commentPartsXML["Discussion"].element?.description
         docs[SwiftDocKey.docResultDiscussion.rawValue] = commentPartsXML["ResultDiscussion"].childrenAsArray()
         return docs
     }
@@ -491,7 +493,7 @@ private extension XMLIndexer {
         }
         let elements = children.compactMap { $0.element }
         func dictionary(from element: SWXMLHash.XMLElement) -> [String: SourceKitRepresentable] {
-            return [element.name: element.text]
+            return [element.name: element.recursiveText]
         }
         return elements.map(dictionary(from:)) as [SourceKitRepresentable]
     }

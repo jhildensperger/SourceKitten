@@ -10,6 +10,8 @@
 public enum SwiftDocKey: String {
     // MARK: SourceKit Keys
 
+    /// The access level of the code (String).
+    case accessibility        = "key.accessibility"
     /// Annotated declaration (String).
     case annotatedDeclaration = "key.annotated_decl"
     /// Body length (Int64).
@@ -47,6 +49,8 @@ public enum SwiftDocKey: String {
 
     // MARK: Custom Keys
 
+    /// Document abstract from comments
+    case docAbstract          = "key.doc.abstract"
     /// Column where the token's declaration begins (Int64).
     case docColumn            = "key.doc.column"
     /// Documentation comment (String).
@@ -55,6 +59,8 @@ public enum SwiftDocKey: String {
     case docDeclaration       = "key.doc.declaration"
     /// Discussion documentation of documented token ([SourceKitRepresentable]).
     case docDiscussion        = "key.doc.discussion"
+    /// Full discussion as XML (String).
+    case docDiscussionXML     = "key.doc.discussion_as_xml"
     /// File where the documented token is located (String).
     case docFile              = "key.doc.file"
     /// Line where the token's declaration begins (Int64).
