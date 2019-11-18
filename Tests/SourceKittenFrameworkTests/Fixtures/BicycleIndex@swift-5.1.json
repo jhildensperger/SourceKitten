@@ -2,13 +2,58 @@
   "key.dependencies" : [
     {
       "key.filepath" : "",
-      "key.hash" : "",
       "key.is_system" : true,
       "key.kind" : "source.lang.swift.import.module.swift",
       "key.name" : "Swift"
     },
     {
       "key.dependencies" : [
+        {
+          "key.dependencies" : [
+            {
+              "key.dependencies" : [
+                {
+                  "key.filepath" : "",
+                  "key.is_system" : true,
+                  "key.kind" : "source.lang.swift.import.module.clang",
+                  "key.name" : "Darwin"
+                },
+                {
+                  "key.filepath" : "",
+                  "key.is_system" : true,
+                  "key.kind" : "source.lang.swift.import.module.swift",
+                  "key.name" : "Swift"
+                },
+                {
+                  "key.filepath" : "",
+                  "key.is_system" : true,
+                  "key.kind" : "source.lang.swift.import.module.clang",
+                  "key.name" : "SwiftOverlayShims"
+                },
+                {
+                  "key.filepath" : "",
+                  "key.is_system" : true,
+                  "key.kind" : "source.lang.swift.import.module.clang",
+                  "key.name" : "SwiftShims"
+                }
+              ],
+              "key.filepath" : "",
+              "key.is_system" : true,
+              "key.kind" : "source.lang.swift.import.module.swift",
+              "key.name" : "Darwin"
+            },
+            {
+              "key.filepath" : "",
+              "key.is_system" : true,
+              "key.kind" : "source.lang.swift.import.module.swift",
+              "key.name" : "Swift"
+            }
+          ],
+          "key.filepath" : "",
+          "key.is_system" : true,
+          "key.kind" : "source.lang.swift.import.module.swift",
+          "key.name" : "Combine"
+        },
         {
           "key.dependencies" : [
             {
@@ -19,14 +64,12 @@
             },
             {
               "key.filepath" : "",
-              "key.hash" : "",
               "key.is_system" : true,
               "key.kind" : "source.lang.swift.import.module.swift",
               "key.name" : "Swift"
             }
           ],
           "key.filepath" : "",
-          "key.hash" : "",
           "key.is_system" : true,
           "key.kind" : "source.lang.swift.import.module.swift",
           "key.name" : "CoreFoundation"
@@ -40,53 +83,60 @@
               "key.name" : "CoreGraphics"
             },
             {
-              "key.dependencies" : [
-                {
-                  "key.filepath" : "",
-                  "key.is_system" : true,
-                  "key.kind" : "source.lang.swift.import.module.clang",
-                  "key.name" : "Darwin"
-                },
-                {
-                  "key.filepath" : "",
-                  "key.hash" : "",
-                  "key.is_system" : true,
-                  "key.kind" : "source.lang.swift.import.module.swift",
-                  "key.name" : "Swift"
-                },
-                {
-                  "key.filepath" : "",
-                  "key.is_system" : true,
-                  "key.kind" : "source.lang.swift.import.module.clang",
-                  "key.name" : "SwiftShims"
-                }
-              ],
               "key.filepath" : "",
-              "key.hash" : "",
               "key.is_system" : true,
               "key.kind" : "source.lang.swift.import.module.swift",
               "key.name" : "Darwin"
             },
             {
               "key.filepath" : "",
-              "key.hash" : "",
               "key.is_system" : true,
               "key.kind" : "source.lang.swift.import.module.swift",
               "key.name" : "Swift"
             }
           ],
           "key.filepath" : "",
-          "key.hash" : "",
           "key.is_system" : true,
           "key.kind" : "source.lang.swift.import.module.swift",
           "key.name" : "CoreGraphics"
         },
         {
           "key.filepath" : "",
-          "key.hash" : "",
           "key.is_system" : true,
           "key.kind" : "source.lang.swift.import.module.swift",
           "key.name" : "Darwin"
+        },
+        {
+          "key.dependencies" : [
+            {
+              "key.filepath" : "",
+              "key.is_system" : true,
+              "key.kind" : "source.lang.swift.import.module.swift",
+              "key.name" : "Combine"
+            },
+            {
+              "key.filepath" : "",
+              "key.is_system" : true,
+              "key.kind" : "source.lang.swift.import.module.clang",
+              "key.name" : "Dispatch"
+            },
+            {
+              "key.filepath" : "",
+              "key.is_system" : true,
+              "key.kind" : "source.lang.swift.import.module.swift",
+              "key.name" : "Swift"
+            },
+            {
+              "key.filepath" : "",
+              "key.is_system" : true,
+              "key.kind" : "source.lang.swift.import.module.clang",
+              "key.name" : "_SwiftDispatchOverlayShims"
+            }
+          ],
+          "key.filepath" : "",
+          "key.is_system" : true,
+          "key.kind" : "source.lang.swift.import.module.swift",
+          "key.name" : "Dispatch"
         },
         {
           "key.filepath" : "",
@@ -104,7 +154,6 @@
             },
             {
               "key.filepath" : "",
-              "key.hash" : "",
               "key.is_system" : true,
               "key.kind" : "source.lang.swift.import.module.swift",
               "key.name" : "Swift"
@@ -117,14 +166,12 @@
             }
           ],
           "key.filepath" : "",
-          "key.hash" : "",
           "key.is_system" : true,
           "key.kind" : "source.lang.swift.import.module.swift",
           "key.name" : "ObjectiveC"
         },
         {
           "key.filepath" : "",
-          "key.hash" : "",
           "key.is_system" : true,
           "key.kind" : "source.lang.swift.import.module.swift",
           "key.name" : "Swift"
@@ -149,13 +196,19 @@
         }
       ],
       "key.filepath" : "",
-      "key.hash" : "",
       "key.is_system" : true,
       "key.kind" : "source.lang.swift.import.module.swift",
       "key.name" : "Foundation"
     }
   ],
   "key.entities" : [
+    {
+      "key.column" : 8,
+      "key.kind" : "source.lang.swift.ref.module",
+      "key.line" : 1,
+      "key.name" : "Foundation",
+      "key.usr" : "c:@M@Foundation"
+    },
     {
       "key.column" : 18,
       "key.kind" : "source.lang.swift.ref.class",
@@ -302,6 +355,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.getter",
               "key.line" : 45,
               "key.usr" : "s:7BicycleAAC5styleAB5StyleOvg"
@@ -313,6 +367,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.setter",
               "key.line" : 45,
               "key.usr" : "s:7BicycleAAC5styleAB5StyleOvs"
@@ -345,6 +400,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.getter",
               "key.line" : 48,
               "key.usr" : "s:7BicycleAAC7gearingAB7GearingOvg"
@@ -356,6 +412,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.setter",
               "key.line" : 48,
               "key.usr" : "s:7BicycleAAC7gearingAB7GearingOvs"
@@ -388,6 +445,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.getter",
               "key.line" : 51,
               "key.usr" : "s:7BicycleAAC9handlebarAB9HandlebarOvg"
@@ -399,6 +457,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.setter",
               "key.line" : 51,
               "key.usr" : "s:7BicycleAAC9handlebarAB9HandlebarOvs"
@@ -431,6 +490,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.getter",
               "key.line" : 54,
               "key.usr" : "s:7BicycleAAC9frameSizeSivg"
@@ -442,6 +502,7 @@
                 }
               ],
               "key.column" : 9,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.setter",
               "key.line" : 54,
               "key.usr" : "s:7BicycleAAC9frameSizeSivs"
@@ -475,6 +536,7 @@
               ],
               "key.column" : 22,
               "key.is_dynamic" : true,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.getter",
               "key.line" : 57,
               "key.usr" : "s:7BicycleAAC13numberOfTripsSivg"
@@ -487,6 +549,7 @@
               ],
               "key.column" : 22,
               "key.is_dynamic" : true,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.setter",
               "key.line" : 57,
               "key.usr" : "s:7BicycleAAC13numberOfTripsSivs"
@@ -520,6 +583,7 @@
               ],
               "key.column" : 22,
               "key.is_dynamic" : true,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.getter",
               "key.line" : 60,
               "key.usr" : "s:7BicycleAAC17distanceTravelledSdvg"
@@ -532,6 +596,7 @@
               ],
               "key.column" : 22,
               "key.is_dynamic" : true,
+              "key.is_implicit" : true,
               "key.kind" : "source.lang.swift.decl.function.accessor.setter",
               "key.line" : 60,
               "key.usr" : "s:7BicycleAAC17distanceTravelledSdvs"
@@ -586,6 +651,7 @@
                 {
                   "key.column" : 14,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 73,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -603,6 +669,7 @@
                 {
                   "key.column" : 14,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 74,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -620,6 +687,7 @@
                 {
                   "key.column" : 14,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 75,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -637,6 +705,7 @@
                 {
                   "key.column" : 14,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 76,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -654,6 +723,7 @@
                 {
                   "key.column" : 9,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 78,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -671,6 +741,7 @@
                 {
                   "key.column" : 9,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 79,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -704,6 +775,7 @@
                 {
                   "key.column" : 13,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.getter",
                   "key.line" : 89,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -712,6 +784,7 @@
                 {
                   "key.column" : 13,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 89,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -725,7 +798,7 @@
             },
             {
               "key.column" : 31,
-              "key.kind" : "source.lang.swift.ref.function.method.static",
+              "key.kind" : "source.lang.swift.ref.function.operator.infix",
               "key.line" : 89,
               "key.name" : "+=(_:_:)",
               "key.usr" : "s:Sd2peoiyySdz_SdtFZ"
@@ -736,6 +809,7 @@
                 {
                   "key.column" : 13,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.getter",
                   "key.line" : 90,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -744,6 +818,7 @@
                 {
                   "key.column" : 13,
                   "key.is_dynamic" : true,
+                  "key.is_implicit" : true,
                   "key.kind" : "source.lang.swift.ref.function.accessor.setter",
                   "key.line" : 90,
                   "key.receiver_usr" : "s:7BicycleAAC",
@@ -757,7 +832,7 @@
             },
             {
               "key.column" : 27,
-              "key.kind" : "source.lang.swift.ref.function.method.static",
+              "key.kind" : "source.lang.swift.ref.function.operator.infix",
               "key.line" : 90,
               "key.name" : "+=(_:_:)",
               "key.usr" : "s:Si2peoiyySiz_SitFZ"
@@ -775,6 +850,5 @@
       "key.name" : "Bicycle",
       "key.usr" : "s:7BicycleAAC"
     }
-  ],
-  "key.hash" : "",
+  ]
 }

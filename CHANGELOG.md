@@ -1,4 +1,31 @@
-## Master
+## 0.26.0
+
+##### Breaking
+
+* SourceKitten now requires Swift 5.0 or higher to build.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Enhancements
+
+* Support building SourceKitten with Swift 5.1.  
+  [Pedro Larroy](https://github.com/larroy)
+
+* Add new libclang types introduced between 0.49 and 0.59.  
+  [JP Simard](https://github.com/jpsim)
+
+* Add new `SwiftDeclarationAttributeKind` and `SwiftDeclarationKind` members
+  introduced in Swift 5.1.  
+  [JP Simard](https://github.com/jpsim)
+
+* `SyntaxKind` now conforms to `CaseIterable`.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Bug Fixes
+
+* Fix Swift response files for paths including special characters.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+## 0.25.0
 
 ##### Breaking
 
@@ -6,11 +33,59 @@
 
 ##### Enhancements
 
-* None.
+* Add `--spm` option to guess the name of a Swift Package Manager module
+  for documentation generation.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+* Support doc generation for modules built with Xcode 11.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+* Add `Module.init?(spmArguments:spmName:inPath)` and use in `doc` command
+  to ensure Swift Package Manager module documentation is up to date.  
+  [John Fairhurst](https://github.com/johnfairh)
 
 ##### Bug Fixes
 
-* None.
+* Fix crash with misplaced documentation comment.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+## 0.24.0
+
+##### Breaking
+
+* Change `Module.init?(spmName:)` to `Module.init?(spmName:inPath:)`.  
+  [Norio Nomura](https://github.com/norio-nomura)
+
+* `SourceKitObjectConvertible` now has `SourceKitObject` parameter requirement
+  instead of `sourcekitd_object_t`. SourceKitObject isn't publicly
+  initializable (this helps memory management).  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+
+* `Dictionary` and `Array` now conditionally conform to
+  `SourceKitObjectConvertible`, instead of crashing when using
+  unexpected types.  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+
+##### Enhancements
+
+* Add `cursorInfoUSR` case to the `Request`.  
+  [Timofey Solonin](https://github.com/biboran)
+
+* Add a `Dictionary<String, SourceKitRepresentable>.referencedUSRs`
+  computed property to retrieve referenced USRs from a SourceKit cursor info
+  response.  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+
+##### Bug Fixes
+
+* Fix `testCommandantDocsSPM` failed on using Swift Package in Xcode 11, because
+  Xcode 11 does not use `SRCROOT` as current directory on executing tests in
+  `Package.swift`.  
+  [Norio Nomura](https://github.com/norio-nomura)
+
+* Release memory created for sourcekitd requests.  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+  [realm/SwiftLint#2812](https://github.com/realm/SwiftLint/issues/2812)
 
 ## 0.23.2
 
@@ -25,9 +100,6 @@
 
 * Make `File` conform to `Equatable` and `Hashable`.  
   [Elliott Williams](https://github.com/elliottwilliams)
-
-* Add `cursorInfoUSR` case to the `Request`.  
-  [Timofey Solonin](https://github.com/biboran)
 
 ##### Bug Fixes
 

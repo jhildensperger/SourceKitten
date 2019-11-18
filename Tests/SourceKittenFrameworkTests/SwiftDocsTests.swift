@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SourceKittenFramework
+@testable import SourceKittenFramework
 import XCTest
 
 func compareJSONString(withFixtureNamed name: String,
@@ -36,7 +36,7 @@ func compareJSONString(withFixtureNamed name: String,
     // Use if changes are introduced by the new Swift version.
     let appendFixturesForNewSwiftVersion = ProcessInfo.processInfo.environment["APPEND_FIXTURES"] != nil ? true : false
     if appendFixturesForNewSwiftVersion && actualContent != expectedFile.contents,
-        var path = expectedFile.path, let index = path.index(of: "@"),
+        var path = expectedFile.path, let index = path.firstIndex(of: "@"),
         !path.hasSuffix("@\(buildingSwiftVersion).json") {
         path.replaceSubrange(index..<path.endIndex, with: "@\(buildingSwiftVersion).json")
         _ = try? actualContent.data(using: .utf8)?.write(to: URL(fileURLWithPath: path), options: [])
@@ -67,22 +67,16 @@ private func compareDocs(withFixtureNamed name: String, file: StaticString = #fi
 }
 
 private func versionedExpectedFilename(for name: String) -> String {
-    #if swift(>=4.2.1)
-        let versions = ["swift-4.2.1", "swift-4.2"]
-    #elseif swift(>=4.2)
-        #if compiler(>=5.0)
-            let versions = ["swift-5.0", "swift-4.2.1", "swift-4.2"]
-        #else
-            let versions = ["swift-4.2"]
-        #endif
-    #else
-        fatalError("Swift 4.2 or later is required!")
-    #endif
-    #if os(Linux)
-        let platforms = ["Linux", ""]
-    #else
-        let platforms = [""]
-    #endif
+#if compiler(>=5.1)
+    let versions = ["swift-5.1", "swift-5.0"]
+#else
+    let versions = ["swift-5.0"]
+#endif
+#if os(Linux)
+    let platforms = ["Linux", ""]
+#else
+    let platforms = [""]
+#endif
     for platform in platforms {
         for version in versions {
             let versionedFilename = "\(fixturesDirectory)\(platform)\(name)@\(version).json"
@@ -102,59 +96,19 @@ private func diff(original: String, modified: String) -> String {
         try original.data(using: .utf8)?.write(to: url.appendingPathComponent("original.json"))
         try modified.data(using: .utf8)?.write(to: url.appendingPathComponent("modified.json"))
 
-        let task = Process()
-        let pathToEnv = "/usr/bin/env"
-        task.arguments = ["git", "diff", "original.json", "modified.json"]
-
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.standardError = pipe
-
-        do {
-        #if canImport(Darwin)
-            if #available(macOS 10.13, *) {
-                task.executableURL = URL(fileURLWithPath: pathToEnv)
-                task.currentDirectoryURL = url
-                try task.run()
-            } else {
-                task.launchPath = pathToEnv
-                task.currentDirectoryPath = url.path
-                task.launch()
-            }
-        #elseif compiler(>=5)
-            task.executableURL = URL(fileURLWithPath: pathToEnv)
-            task.currentDirectoryURL = url
-            try task.run()
-        #else
-            task.launchPath = pathToEnv
-            task.currentDirectoryPath = url.path
-            task.launch()
-        #endif
-        } catch {
-            return ""
-        }
-
-        let file = pipe.fileHandleForReading
-        defer { file.closeFile() }
-
-        return String(data: file.readDataToEndOfFile(), encoding: .utf8) ?? ""
+        return Exec.run("/usr/bin/env", "git", "diff", "original.json", "modified.json",
+                        currentDirectory: url.path).string ?? ""
     } catch {
         return "\(error)"
     }
 }
 
 private let buildingSwiftVersion: String = {
-    #if swift(>=4.2.1)
-        return "swift-4.2.1"
-    #elseif swift(>=4.2)
-        #if compiler(>=5.0)
-            return "swift-5.0"
-        #else
-            return "swift-4.2"
-        #endif
-    #else
-        fatalError("Swift 4.2 or later is required!")
-    #endif
+#if compiler(>=5.1)
+    return "swift-5.1"
+#else
+    return "swift-5.0"
+#endif
 }()
 
 class SwiftDocsTests: XCTestCase {
@@ -195,6 +149,14 @@ class SwiftDocsTests: XCTestCase {
         XCTAssertEqual(toNSDictionary(parsedPreSwift32), expected)
         XCTAssertEqual(toNSDictionary(parsedSwift32), expected)
     }
+
+    // #606 - create docs without crashing
+    func testParseExternalReference() {
+        let firstPath = fixturesDirectory + "ExternalRef1.swift"
+        let secondPath = fixturesDirectory + "ExternalRef2.swift"
+        let docs = SwiftDocs(file: File(path: firstPath)!, arguments: [firstPath, secondPath])!
+        XCTAssertFalse(docs.docsDictionary.isEmpty)
+    }
 }
 
 extension SwiftDocsTests {
@@ -203,7 +165,8 @@ extension SwiftDocsTests {
             ("testSubscript", testSubscript),
             ("testBicycle", testBicycle),
             ("testExtension", testExtension),
-            ("testParseFullXMLDocs", testParseFullXMLDocs)
+            ("testParseFullXMLDocs", testParseFullXMLDocs),
+            ("testParseExternalReference", testParseExternalReference)
         ]
     }
 }

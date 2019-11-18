@@ -49,15 +49,15 @@
             "key.parsed_scope.start" : 3,
             "key.setter_accessibility" : "source.lang.swift.accessibility.internal",
             "key.substructure" : [
-
+              
             ],
             "key.typename" : "(String) -> ()",
-            "key.typeusr" : "$SyySScD",
+            "key.typeusr" : "$syySScD",
             "key.usr" : "s:9Subscript10VoidStructVyySScip"
           }
         ],
         "key.typename" : "VoidStruct.Type",
-        "key.typeusr" : "$S9Subscript10VoidStructVmD",
+        "key.typeusr" : "$s9Subscript10VoidStructVmD",
         "key.usr" : "s:9Subscript10VoidStructV"
       }
     ]

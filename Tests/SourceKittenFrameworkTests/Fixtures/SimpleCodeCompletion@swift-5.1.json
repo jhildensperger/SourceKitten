@@ -10,17 +10,6 @@
   "sourcetext" : "addingReportingOverflow(<#T##other: Int##Int#>)",
   "typeName" : "(partialValue: Int, overflow: Bool)"
 }, {
-  "associatedUSRs" : "s:SzsE8advanced2byxSi_tF",
-  "context" : "source.codecompletion.context.superclass",
-  "descriptionKey" : "advanced(by: Int)",
-  "docBrief" : "Returns a value that is offset the specified distance from this value.",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "advanced(by:)",
-  "numBytesToErase" : 0,
-  "sourcetext" : "advanced(by: <#T##Int#>)",
-  "typeName" : "Int"
-}, {
   "associatedUSRs" : "s:Si8advanced2byS2i_tF s:Sx8advanced2byx6StrideQz_tF",
   "context" : "source.codecompletion.context.thisclass",
   "descriptionKey" : "advanced(by: Int)",
@@ -76,7 +65,7 @@
   "sourcetext" : "customMirror",
   "typeName" : "Mirror"
 }, {
-  "associatedUSRs" : "s:Si25customPlaygroundQuickLooks0bcD0Ovp s:s29CustomPlaygroundQuickLookableP06custombC4Looks0bcF0Ovp",
+  "associatedUSRs" : "s:Si25customPlaygroundQuickLooks01_bcD0Ovp s:s30_CustomPlaygroundQuickLookableP06custombC4Looks01_bcF0Ovp",
   "context" : "source.codecompletion.context.thisclass",
   "descriptionKey" : "customPlaygroundQuickLook",
   "docBrief" : "A custom playground Quick Look for the Int instance.",
@@ -85,7 +74,7 @@
   "name" : "customPlaygroundQuickLook",
   "numBytesToErase" : 0,
   "sourcetext" : "customPlaygroundQuickLook",
-  "typeName" : "PlaygroundQuickLook"
+  "typeName" : "_PlaygroundQuickLook"
 }, {
   "associatedUSRs" : "s:SzsE11descriptionSSvp",
   "context" : "source.codecompletion.context.superclass",
@@ -97,17 +86,6 @@
   "numBytesToErase" : 0,
   "sourcetext" : "description",
   "typeName" : "String"
-}, {
-  "associatedUSRs" : "s:SzsE8distance2toSix_tF",
-  "context" : "source.codecompletion.context.superclass",
-  "descriptionKey" : "distance(to: Int)",
-  "docBrief" : "Returns the distance from this value to the given value, expressed as a stride.",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "distance(to:)",
-  "numBytesToErase" : 0,
-  "sourcetext" : "distance(to: <#T##Int#>)",
-  "typeName" : "Int"
 }, {
   "associatedUSRs" : "s:Si8distance2toS2i_tF s:Sx8distance2to6StrideQzx_tF",
   "context" : "source.codecompletion.context.thisclass",
@@ -167,12 +145,24 @@
   "associatedUSRs" : "s:Si9hashValueSivp s:SH9hashValueSivp",
   "context" : "source.codecompletion.context.thisclass",
   "descriptionKey" : "hashValue",
+  "docBrief" : "The hash value.",
   "kind" : "source.lang.swift.decl.var.instance",
   "moduleName" : "Swift",
   "name" : "hashValue",
   "numBytesToErase" : 0,
   "sourcetext" : "hashValue",
   "typeName" : "Int"
+}, {
+  "associatedUSRs" : "s:SZss17FixedWidthIntegerRzrlE10isMultiple2ofSbx_tF",
+  "context" : "source.codecompletion.context.superclass",
+  "descriptionKey" : "isMultiple(of: Int)",
+  "docBrief" : "Returns true if this value is a multiple of the given value, and false otherwise.",
+  "kind" : "source.lang.swift.decl.function.method.instance",
+  "moduleName" : "Swift",
+  "name" : "isMultiple(of:)",
+  "numBytesToErase" : 0,
+  "sourcetext" : "isMultiple(of: <#T##Int#>)",
+  "typeName" : "Bool"
 }, {
   "associatedUSRs" : "s:Si19leadingZeroBitCountSivp s:s17FixedWidthIntegerP19leadingZeroBitCountSivp",
   "context" : "source.codecompletion.context.thisclass",
@@ -273,19 +263,16 @@
   "sourcetext" : "remainderReportingOverflow(dividingBy: <#T##Int#>)",
   "typeName" : "(partialValue: Int, overflow: Bool)"
 }, {
-  "associatedUSRs" : "s:Si6signumSiyF s:Sz6signumxyF",
   "context" : "source.codecompletion.context.thisclass",
-  "descriptionKey" : "signum()",
-  "docBrief" : "Returns -1 if this value is negative and 1 if it’s positive; otherwise, 0.",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "signum()",
+  "descriptionKey" : "self",
+  "kind" : "source.lang.swift.keyword",
+  "name" : "self",
   "numBytesToErase" : 0,
-  "sourcetext" : "signum()",
+  "sourcetext" : "self",
   "typeName" : "Int"
 }, {
-  "associatedUSRs" : "s:SzsE6signumxyF",
-  "context" : "source.codecompletion.context.superclass",
+  "associatedUSRs" : "s:Si6signumSiyF s:Sz6signumxyF",
+  "context" : "source.codecompletion.context.thisclass",
   "descriptionKey" : "signum()",
   "docBrief" : "Returns -1 if this value is negative and 1 if it’s positive; otherwise, 0.",
   "kind" : "source.lang.swift.decl.function.method.instance",
@@ -315,46 +302,6 @@
   "name" : "trailingZeroBitCount",
   "numBytesToErase" : 0,
   "sourcetext" : "trailingZeroBitCount",
-  "typeName" : "Int"
-}, {
-  "associatedUSRs" : "s:s17FixedWidthIntegerPsE12unsafeAddingyxxF",
-  "context" : "source.codecompletion.context.superclass",
-  "descriptionKey" : "unsafeAdding(other: Int)",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "unsafeAdding(:)",
-  "numBytesToErase" : 0,
-  "sourcetext" : "unsafeAdding(<#T##other: Int##Int#>)",
-  "typeName" : "Int"
-}, {
-  "associatedUSRs" : "s:s17FixedWidthIntegerPsE13unsafeDivided2byxx_tF",
-  "context" : "source.codecompletion.context.superclass",
-  "descriptionKey" : "unsafeDivided(by: Int)",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "unsafeDivided(by:)",
-  "numBytesToErase" : 0,
-  "sourcetext" : "unsafeDivided(by: <#T##Int#>)",
-  "typeName" : "Int"
-}, {
-  "associatedUSRs" : "s:s17FixedWidthIntegerPsE16unsafeMultiplied2byxx_tF",
-  "context" : "source.codecompletion.context.superclass",
-  "descriptionKey" : "unsafeMultiplied(by: Int)",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "unsafeMultiplied(by:)",
-  "numBytesToErase" : 0,
-  "sourcetext" : "unsafeMultiplied(by: <#T##Int#>)",
-  "typeName" : "Int"
-}, {
-  "associatedUSRs" : "s:s17FixedWidthIntegerPsE17unsafeSubtractingyxxF",
-  "context" : "source.codecompletion.context.superclass",
-  "descriptionKey" : "unsafeSubtracting(other: Int)",
-  "kind" : "source.lang.swift.decl.function.method.instance",
-  "moduleName" : "Swift",
-  "name" : "unsafeSubtracting(:)",
-  "numBytesToErase" : 0,
-  "sourcetext" : "unsafeSubtracting(<#T##other: Int##Int#>)",
   "typeName" : "Int"
 }, {
   "associatedUSRs" : "s:Si5wordsSi5WordsVvp s:Sz5words5WordsQzvp",
