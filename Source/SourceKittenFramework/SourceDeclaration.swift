@@ -18,12 +18,12 @@ public func insertMarks(declarations: [SourceDeclaration], limit: NSRange? = nil
     guard let path = declarations.first?.location.file, let file = File(path: path) else {
         fatalError("can't extract marks without a file.")
     }
-    let currentMarks = file.contents.pragmaMarks(filename: path, excludeRanges: declarations.map({
-        file.contents.byteRangeToNSRange(start: $0.range.location, length: $0.range.length) ?? NSRange()
+    let currentMarks = file.stringView.pragmaMarks(filename: path, excludeRanges: declarations.map({
+        file.stringView.byteRangeToNSRange($0.range) ?? NSRange()
     }), limit: limit)
     let newDeclarations: [SourceDeclaration] = declarations.map { declaration in
         var varDeclaration = declaration
-        let range = file.contents.byteRangeToNSRange(start: declaration.range.location, length: declaration.range.length)
+        let range = file.stringView.byteRangeToNSRange(declaration.range)
         varDeclaration.children = insertMarks(declarations: declaration.children, limit: range)
         return varDeclaration
     }
@@ -47,7 +47,7 @@ public struct SourceDeclaration {
     public let availability: ClangAvailability?
 
     /// Range
-    public var range: NSRange {
+    public var range: ByteRange {
         return extent.start.range(toEnd: extent.end)
     }
 

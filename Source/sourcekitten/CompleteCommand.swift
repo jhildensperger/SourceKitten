@@ -8,7 +8,6 @@
 
 import Commandant
 import Foundation
-import Result
 import SourceKittenFramework
 
 struct CompleteCommand: CommandProtocol {
@@ -55,7 +54,7 @@ struct CompleteCommand: CommandProtocol {
         var args: [String]
         if options.spmModule.isEmpty {
             args = ["-c", path] + options.compilerargs
-            if args.index(of: "-sdk") == nil {
+            if args.contains("-sdk") {
                 args.append(contentsOf: ["-sdk", sdkPath()])
             }
         } else {
@@ -66,8 +65,8 @@ struct CompleteCommand: CommandProtocol {
         }
 
         let request = Request.codeCompletionRequest(file: path, contents: contents,
-            offset: Int64(options.offset),
-            arguments: args)
+                                                    offset: ByteCount(options.offset),
+                                                    arguments: args)
         do {
             print(CodeCompletionItem.parse(response: try request.send()))
             return .success(())

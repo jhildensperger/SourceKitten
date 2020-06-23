@@ -108,7 +108,7 @@ extension CXCursor {
 
     func str() -> String? {
         let cursorExtent = extent()
-        let contents = try! String(contentsOfFile: cursorExtent.start.file, encoding: .utf8)
+        let contents = StringView(try! String(contentsOfFile: cursorExtent.start.file, encoding: .utf8))
         return contents.substringWithSourceRange(start: cursorExtent.start, end: cursorExtent.end)
     }
 
@@ -185,12 +185,19 @@ extension CXCursor {
             "@return ": "- returns: ",
             "@warning ": "- warning: ",
             "@see ": "- see: ",
-            "@note ": "- note: "
+            "@note ": "- note: ",
+            "@code": "```",
+            "@endcode": "```"
         ]
+
         var commentBody = rawComment?.commentBody()
         for (original, replacement) in replacements {
             commentBody = commentBody?.replacingOccurrences(of: original, with: replacement)
         }
+
+        // Replace "@c word" with "`word`"
+        commentBody = commentBody?.replacingOccurrences(of: "@c\\s+(\\S+)", with: "`$1`", options: .regularExpression)
+
         return commentBody
     }
 
@@ -213,7 +220,7 @@ extension CXCursor {
 
         guard let usr = usr(),
             let findUSR = try? Request.findUSR(file: swiftUUID, usr: usr).send(),
-            let usrOffset = findUSR[SwiftDocKey.offset.rawValue] as? Int64 else {
+            let usrOffset = SwiftDocKey.getOffset(findUSR) else {
                 return (nil, nil)
         }
 
@@ -263,7 +270,8 @@ extension CXComment {
                 let inlineCommand = child.commandName().map { "@" + $0 }
                 return paragraphString + (inlineCommand ?? "")
             }
-            fatalError("not text: \(child.kind())")
+            // Inline child content like `CXComment_HTMLStartTag` can be ignored b/c subsequent children will contain the html.
+            return paragraphString
         }
         return [.para(paragraphString.removingCommonLeadingWhitespaceFromLines(), kindString)]
     }

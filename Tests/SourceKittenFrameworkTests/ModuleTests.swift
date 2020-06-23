@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SourceKittenFramework
+@testable import SourceKittenFramework
 import XCTest
 
 let projectRoot = #file.bridge()
@@ -29,13 +29,6 @@ class ModuleTests: XCTestCase {
         let commandantModule = Module(xcodeBuildArguments: arguments, name: nil, inPath: commandantPath)!
         compareJSONString(withFixtureNamed: "Commandant", jsonString: commandantModule.docs, rootDirectory: commandantPath)
     }
-
-    func testCommandantResultDocs() {
-        let commandantPath = projectRoot + "/Carthage/Checkouts/Commandant/"
-        let arguments = ["-workspace", "Commandant.xcworkspace", "-scheme", "Result-tvOS", "test"]
-        let commandantModule = Module(xcodeBuildArguments: arguments, name: nil, inPath: commandantPath)!
-        compareJSONString(withFixtureNamed: "CommandantResultTVOS", jsonString: commandantModule.docs, rootDirectory: commandantPath)
-    }
 }
 
 #if SWIFT_PACKAGE
@@ -46,50 +39,17 @@ let commandantPathForSPM: String? = {
         var dependencies: [Package]
     }
 
-    let task = Process()
-    let path = "/usr/bin/env"
-    task.arguments = ["swift", "package", "show-dependencies", "--format", "json"]
-
-    let pipe = Pipe()
-    task.standardOutput = pipe
-
-    do {
-    #if canImport(Darwin)
-        if #available(macOS 10.13, *) {
-            task.executableURL = URL(fileURLWithPath: path)
-            task.currentDirectoryURL = URL(fileURLWithPath: projectRoot)
-            try task.run()
-        } else {
-            task.launchPath = path
-            task.currentDirectoryPath = projectRoot
-            task.launch()
-        }
-    #elseif compiler(>=5)
-        task.executableURL = URL(fileURLWithPath: path)
-        task.currentDirectoryURL = URL(fileURLWithPath: projectRoot)
-        try task.run()
-    #else
-        task.launchPath = path
-        task.currentDirectoryPath = projectRoot
-        task.launch()
-    #endif
-    } catch {
-        return nil
-    }
-    task.waitUntilExit()
-
-    let file = pipe.fileHandleForReading
-    let data = file.readDataToEndOfFile()
-    file.closeFile()
-    guard task.terminationStatus == 0 else {
-        print("`\(task.arguments?.joined(separator: " ") ?? "")` returns error: \(task.terminationStatus)")
+    let arguments = ["swift", "package", "show-dependencies", "--format", "json"]
+    let result = Exec.run("/usr/bin/env", arguments, currentDirectory: projectRoot)
+    guard result.terminationStatus == 0 else {
+        print("`\(arguments.joined(separator: " "))` returns error: \(result.terminationStatus)")
         return nil
     }
     do {
-        let package = try JSONDecoder().decode(Package.self, from: data)
+        let package = try JSONDecoder().decode(Package.self, from: result.data)
         return (package.dependencies.first(where: { $0.name == "Commandant" })?.path).map { $0 + "/" }
     } catch {
-        print("failed to decode output of `\(task.arguments?.joined(separator: " ") ?? "")`: \(error)")
+        print("failed to decode output of `\(arguments.joined(separator: " "))`: \(error)")
         return nil
     }
 }()
@@ -100,8 +60,13 @@ extension ModuleTests {
             XCTFail("Can't find Commandant")
             return
         }
-        let commandantModule = Module(spmName: "Commandant")!
+        let commandantModule = Module(spmArguments: [], spmName: "Commandant", inPath: projectRoot)!
         compareJSONString(withFixtureNamed: "CommandantSPM", jsonString: commandantModule.docs, rootDirectory: commandantPath)
+    }
+
+    func testSpmDefaultModule() {
+        let skModule = Module(spmName: nil, inPath: projectRoot)!
+        XCTAssertEqual("SourceKittenFramework", skModule.name)
     }
 
     static var allTests: [(String, (ModuleTests) -> () throws -> Void)] {
@@ -109,7 +74,8 @@ extension ModuleTests {
             // Disabled on Linux because these tests require Xcode
             // ("testModuleNilInPathWithNoXcodeProject", testModuleNilInPathWithNoXcodeProject),
             // ("testCommandantDocs", testCommandantDocs),
-            ("testCommandantDocsSPM", testCommandantDocsSPM)
+            ("testCommandantDocsSPM", testCommandantDocsSPM),
+            ("testSpmDefaultModule", testSpmDefaultModule)
         ]
     }
 }

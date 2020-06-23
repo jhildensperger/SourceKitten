@@ -6,11 +6,171 @@
 
 ##### Enhancements
 
+* Update Yams to 3.0.0.  
+  [Keith Smiley](https://github.com/keith)
+
+* Add `SwiftDeclarationAttributeKind` values introduced in Swift 5.2.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Bug Fixes
+
+* Stop the program immediately if the `xcodebuild` command fails.  
+  [John Fairhurst](https://github.com/johnfairh)
+  [#643](https://github.com/jpsim/SourceKitten/issues/643)
+
+## 0.29.0
+
+##### Breaking
+
+* Replace all uses of `Int`/`Int64`/`NSRange` representing byte offsets
+  to use newly introduced `ByteCount` and `ByteRange` values instead.
+  This will minimize the risk of accidentally using a byte-based offset
+  in character-based contexts.  
+  [Paul Taykalo](https://github.com/PaulTaykalo)
+  [JP Simard](https://github.com/jpsim)
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
+* Improve `key.parsed_declaration` in Swift 5.1+ for declarations on
+  multiple lines without a body.  
+  [John Fairhurst](https://github.com/johnfairh)
+  [#633](https://github.com/jpsim/SourceKitten/issues/633)
+
+## 0.28.0
+
+##### Breaking
+
+* Replace many of the public extensions on String, and its internal
+  caching mechanism `CacheContainer`, with a new `StringView` type.  
+  [Paul Taykalo](https://github.com/PaulTaykalo)
+
+##### Enhancements
+
+* Allow inline html tags in ObjC doc comments.  
+  [Chris Williams](https://github.com/ultramiraculous)
+  [#409](https://github.com/jpsim/SourceKitten/issues/409)
+  [realm/jazzy#976](https://github.com/realm/jazzy/issues/976)
+
+* Support code formatting in ObjC doc comments with `@c`, `@code` and
+  `@endcode`.  
+  [Bryce Pauken](https://github.com/brycepauken)
+  [#631](https://github.com/jpsim/SourceKitten/issues/631)
+
+##### Bug Fixes
+
+* Fix crash when SourceKit returns out of bounds string byte offsets.  
+  [JP Simard](https://github.com/jpsim)
+
+## 0.27.0
+
+##### Breaking
+
+* Update Commandant dependency to version 0.17.0, removing the
+  `antitypical/Result` dependency in favor of the Swift standard
+  library's `Result` type.  
+  [JP Simard](https://github.com/jpsim)
+  [#623](https://github.com/jpsim/SourceKitten/issues/623)
+
+##### Enhancements
+
 * None.
 
 ##### Bug Fixes
 
 * None.
+
+## 0.26.0
+
+##### Breaking
+
+* SourceKitten now requires Swift 5.0 or higher to build.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Enhancements
+
+* Support building SourceKitten with Swift 5.1.  
+  [Pedro Larroy](https://github.com/larroy)
+
+* Add new libclang types introduced between 0.49 and 0.59.  
+  [JP Simard](https://github.com/jpsim)
+
+* Add new `SwiftDeclarationAttributeKind` and `SwiftDeclarationKind` members
+  introduced in Swift 5.1.  
+  [JP Simard](https://github.com/jpsim)
+
+* `SyntaxKind` now conforms to `CaseIterable`.  
+  [JP Simard](https://github.com/jpsim)
+
+##### Bug Fixes
+
+* Fix Swift response files for paths including special characters.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+## 0.25.0
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* Add `--spm` option to guess the name of a Swift Package Manager module
+  for documentation generation.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+* Support doc generation for modules built with Xcode 11.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+* Add `Module.init?(spmArguments:spmName:inPath)` and use in `doc` command
+  to ensure Swift Package Manager module documentation is up to date.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+##### Bug Fixes
+
+* Fix crash with misplaced documentation comment.  
+  [John Fairhurst](https://github.com/johnfairh)
+
+## 0.24.0
+
+##### Breaking
+
+* Change `Module.init?(spmName:)` to `Module.init?(spmName:inPath:)`.  
+  [Norio Nomura](https://github.com/norio-nomura)
+
+* `SourceKitObjectConvertible` now has `SourceKitObject` parameter requirement
+  instead of `sourcekitd_object_t`. SourceKitObject isn't publicly
+  initializable (this helps memory management).  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+
+* `Dictionary` and `Array` now conditionally conform to
+  `SourceKitObjectConvertible`, instead of crashing when using
+  unexpected types.  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+
+##### Enhancements
+
+* Add `cursorInfoUSR` case to the `Request`.  
+  [Timofey Solonin](https://github.com/biboran)
+
+* Add a `Dictionary<String, SourceKitRepresentable>.referencedUSRs`
+  computed property to retrieve referenced USRs from a SourceKit cursor info
+  response.  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+
+##### Bug Fixes
+
+* Fix `testCommandantDocsSPM` failed on using Swift Package in Xcode 11, because
+  Xcode 11 does not use `SRCROOT` as current directory on executing tests in
+  `Package.swift`.  
+  [Norio Nomura](https://github.com/norio-nomura)
+
+* Release memory created for sourcekitd requests.  
+  [Colton Schlosser](https://github.com/cltnschlosser)
+  [realm/SwiftLint#2812](https://github.com/realm/SwiftLint/issues/2812)
 
 ## 0.23.2
 
@@ -25,9 +185,6 @@
 
 * Make `File` conform to `Equatable` and `Hashable`.  
   [Elliott Williams](https://github.com/elliottwilliams)
-
-* Add `cursorInfoUSR` case to the `Request`.  
-  [Timofey Solonin](https://github.com/biboran)
 
 ##### Bug Fixes
 
